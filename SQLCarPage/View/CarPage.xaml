@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SQLCarPage.MVVM.ViewModels"
+             x:Class="SQLCarPage.View.CarPage"
+             Title="CarPage">
+
+    <Grid RowDefinitions=".3*,.7*">
+        <VerticalStackLayout Grid.Row="0"
+                             Padding="20">
+            <Label Text="Car Page" FontSize="24" />
+            <Entry Placeholder="ID" 
+                   Text="{Binding CurrentCar.ID}" />
+            <!-- แสดง ID แต่ไม่ให้แก้ไข -->
+            <Entry Placeholder="Model"
+                   Text="{Binding CurrentCar.Model}" />
+            <Entry Placeholder="Color"
+                   Text="{Binding CurrentCar.Color}" />
+            <Button Text="Add or Update"
+                    Command="{Binding AddOrUpdateCommand}" />
+        </VerticalStackLayout>
+        <ScrollView Padding="20"
+                     Grid.Row="1">
+            <CollectionView ItemsSource="{Binding Cars}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding CurrentCar}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItem 
+                                        Text="Delete"
+                                        BackgroundColor="Red"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:CarPageViewModel}}, Path=DeleteCommand}" />
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+                            <Grid Padding="10" ColumnDefinitions="*, *, *">
+                                <Label Grid.Column="0" 
+                                       Text="{Binding ID}" 
+                                       VerticalOptions="Center" />
+                                <Label Grid.Column="1" 
+                                       Text="{Binding Model}" 
+                                       VerticalOptions="Center" />
+                                <Label Grid.Column="2" 
+                                       Text="{Binding Color}" 
+                                       VerticalOptions="Center" />
+                            </Grid>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </Grid>
+</ContentPage>
